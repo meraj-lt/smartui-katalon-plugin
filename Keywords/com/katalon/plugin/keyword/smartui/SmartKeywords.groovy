@@ -7,8 +7,12 @@ class SmartKeywords {
 	static SmartUI SMARTUI_CLIENT = null
 
 	@Keyword
-	static void startServer(String buildName = "", String configFile = "", int timeout = 30000) throws Exception {
-		SmartUI smartUI = Utils.smartUIInit(buildName, configFile, timeout)
+	static void startServer(String buildName, String configFile, String port) throws Exception {
+        Integer portNumber = null
+        if (port != null && !port.trim().isEmpty()){
+            portNumber = Integer.valueOf(port)
+        }
+		SmartUI smartUI = Utils.smartUIInit(buildName, configFile, portNumber)
 		smartUI.startServer()
 		boolean healthy = smartUI.isServerHealthy()
 		if (!healthy) {

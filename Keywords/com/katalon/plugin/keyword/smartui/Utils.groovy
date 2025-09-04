@@ -34,17 +34,18 @@ class Utils {
 		return katalonWebDriver
 	}
 
-	static SmartUI smartUIInit(String buildName, String configFile, int timeout) {
+	static SmartUI smartUIInit(String buildName, String configFile, Integer port) {
 		SmartUIConfig config = new SmartUIConfig()
-		config = config.withProjectToken(Utils.PROJECT_TOKEN)
-		config = config.withTimeout(timeout)
-		if(!(buildName == null || buildName.isEmpty())) {
-			config = config.withBuildName(buildName)
+				.withProjectToken(Utils.PROJECT_TOKEN);
+		if (port != null) {
+			config = config.withPort(port);
 		}
-		if(!(configFile == null || configFile.isEmpty())) {
-			config = config.withConfigFile(configFile)
+		if (buildName != null && !buildName.isEmpty()) {
+			config = config.withBuildName(buildName);
 		}
-		SmartUI smartUI = new SmartUI(config)
-		return smartUI
+		if (configFile != null && !configFile.isEmpty()) {
+			config = config.withConfigFile(configFile);
+		}
+		return new SmartUI(config);
 	}
 }
